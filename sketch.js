@@ -132,6 +132,7 @@ function moveSprite() {
   } else{
     playerSprite.changeAnimation('stop');
     playerSprite.velocity.y = 0;
+    playerSprite.velocity.x = 0;
   }
 }
 
