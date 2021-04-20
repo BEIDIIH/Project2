@@ -1,7 +1,7 @@
 CurrentState,KeyTyped,KeyCode,MouseEvent,ClickableName,MapDirection,NextState
 Splash,,,mouseReleased,,,Instructions
-Instructions,,,,StartGame,,Room
-Room,,,,,S,Room
+Instructions,,,mouseReleased,,,Room
+Room,,,,,S,Village
 Village,,,,,W,Fork
 Prop,,,,,S,Village
 Weapon,,,,,S,Village
