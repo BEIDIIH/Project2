@@ -1,14 +1,9 @@
 /***********************************************************************************
-  MoodyMaze
-  by Scott Kildall
+ Mirror
+  by Beidi Han
 
   Uses the p5.2DAdventure.js class 
-  
-------------------------------------------------------------------------------------
-	To use:
-	Add this line to the index.html
-
-  <script src="p5.2DAdventure.js"></script>
+	
 ***********************************************************************************/
 //speed
 var speedleft = 0;
@@ -178,11 +173,11 @@ function drawDebugInfo() {
 // pass to adventure manager, this do the draw / undraw events
 function keyPressed() {
   // toggle fullscreen mode
-  if( key === 'f') {
-    fs = fullscreen();
-    fullscreen(!fs);
-    return;
-}
+  //if( key === 'f') {
+   // fs = fullscreen();
+   // fullscreen(!fs);
+   // return;
+//}
 
   // dispatch key events for adventure manager to move from state to 
   // state or do special actions - this can be disabled for NPC conversations
@@ -367,9 +362,6 @@ class Village extends PNGRoom {
     this.armor = createSprite(724, 127, 24, 28);
     this.armor.addImage(Door[2]);
 
-    this.prop = createSprite(802, 127, 24, 28);
-    this.prop.addImage(Door[3]);
-
     this.restaurant = createSprite(376, 127, 24, 28);
     this.restaurant.addImage(Door[4]);
 
@@ -408,13 +400,7 @@ class Village extends PNGRoom {
       playerSprite.position.x += 150;
       playerSprite.position.y += 500;
     }
-//draw prop store
-    drawSprite(this.prop);
-    if(playerSprite.overlap(this.prop) && keyIsDown(87)){
-      adventureManager.changeState("Prop");
-      playerSprite.position.x -= 160;
-      playerSprite.position.y += 530;
-  }
+
 //draw restaurant
     drawSprite(this.restaurant);
     if(playerSprite.overlap(this.restaurant) && keyIsDown(87)){
@@ -575,30 +561,6 @@ drawSprite(this.buy);
     }
 
 
-class Prop extends PNGRoom {
-  preload() {
-    this.door = createSprite(638, 710, 50, 50);
-    this.door.addImage(Door[7]);
-
-    this.npc = createSprite(728, 196, 33, 50);
-    this.npc.addAnimation('npc', NPC[5]); 
-  }
-
-  draw(){
-    super.draw();
-//draw the door to village
-    drawSprite(this.door);
-    if(playerSprite.overlap(this.door) && keyIsDown(83)){
-      adventureManager.changeState("Village");
-      playerSprite.position.x += 160;
-      playerSprite.position.y -= 530;
-  }
-
-//draw the npc
-    drawSprite(this.npc);
-}
-}
-
 class Restaurant extends PNGRoom {
   preload() {
     this.door = createSprite(903, 710, 50, 50);
@@ -632,30 +594,30 @@ class Restaurant extends PNGRoom {
     counter += 1;} 
     else if(counter == 1){
       frameRate(8);
-  currentDialogue = 'Isnt this our warrior?';
+  currentDialogue = 'Cassie: Isnt this our adventurer?';
     }
 else if(counter == 2){
   frameRate(8);
-      currentDialogue = 'Come here, sit down and eat something';      
+      currentDialogue = 'Cassie: Come here, sit down and eat something';      
 }else if(counter == 3){
   frameRate(8);
   currentDialogue = '...';
 }
 else if(counter == 4){
   frameRate(8);
-  currentDialogue = 'Whats going on? This is not an expression that a warrior should have!';
+  currentDialogue = 'Cassie: Whats going on? This is not an expression that an adventurer should have!';
 }
 else if(counter == 5){
   frameRate(10);
-   currentDialogue = 'This is the third year since our brother lost contact, and now I have to embark on the same path';
+   currentDialogue = 'David: This is the third year since our brother lost contact, and now I have to embark on the same path';
 }
 else if(counter == 6){
   frameRate(10);
-   currentDialogue = '...';
+   currentDialogue = 'Cassie: ...';
 }
 else if(counter == 7){
   frameRate(8);
-   currentDialogue = 'I will be back, definitely! !';
+   currentDialogue = 'David: I will be back after I got enough money, definitely! !';
 }
 else if(counter == 8){
   frameRate(80);
@@ -699,32 +661,36 @@ class Mayor extends PNGRoom {
     counter += 1;} 
     else if(counter == 1){
       frameRate(8);
-  currentDialogue = 'David, You are here...';
+  currentDialogue = 'Lord: I heard that you plan to set off to the east?';
     }
 else if(counter == 2){
   frameRate(8);
-      currentDialogue = 'Then I will get to the point. I believe you have also realized that our mines are barren and we can barely support it before, but this year I am afraid it will not work.';      
+      currentDialogue = 'David: Yes, dear Lord';      
 }else if(counter == 3){
   frameRate(8);
   currentDialogue = '...';
 }
 else if(counter == 4){
   frameRate(8);
-  currentDialogue = 'I know this may not be appropriate, but if possible, I would like to entrust you to the Eastern Kingdom. I know this journey will be very dangerous, but this may be our last hope.';
+  currentDialogue = 'Lord: If you are determined, I won’t persuade you anymore. Be careful on the way';
 }
 else if(counter == 5){
   frameRate(8);
-   currentDialogue = '...';
+   currentDialogue = 'Lord: Sorry about my useless. Im afraid that our city will never have a bright future. .';
 }
 else if(counter == 6){
   frameRate(8);
-   currentDialogue = 'If this is our last hope...';
+   currentDialogue = 'Lord: Although the journey is difficult, if you can successfully reach the east, it must be a opportunity for you...';
 }
 else if(counter == 7){
   frameRate(8);
-   currentDialogue = 'Im willing to try';
+   currentDialogue = 'Lord: It’s just that the young people in our city going to the East rarely return news. If you can, I hope you can see how these people are doing in the East.';
 }
 else if(counter == 8){
+  frameRate(8);
+   currentDialogue = 'David: I will...';
+}
+else if(counter == 9){
   frameRate(80);
    dialogueVisible = false;
 }
@@ -926,6 +892,9 @@ class Evillage extends PNGRoom {
 
     this.npc2 = createSprite(388, 345, 33, 50);
     this.npc2.addAnimation('npc', NPC[7]);
+
+    this.prop = createSprite(724, 157, 24, 28);
+    this.prop.addImage(Door[3]);
   }
 
   draw(){
@@ -956,7 +925,57 @@ drawSprite(this.npc1);
 drawSprite(this.npc2);
     if (playerSprite.overlap(this.npc2)) {
       dialogueVisible = true;
-      currentDialogue = 'OMG, someone came out of the Forest Maze alive!!!';
+      currentDialogue = 'OMG, someone came out of the Forest Maze alive!!! Are you coming from the west too?';
+    }
+
+//draw prop store
+    drawSprite(this.prop);
+    if(playerSprite.overlap(this.prop) && keyIsDown(87)){
+      adventureManager.changeState("Prop");
+      playerSprite.position.x -= 80;
+      playerSprite.position.y += 530;
+  }
+}
+}
+
+class Prop extends PNGRoom {
+  preload() {
+    this.door = createSprite(638, 710, 50, 50);
+    this.door.addImage(Door[7]);
+
+    this.npc = createSprite(728, 196, 33, 50);
+    this.npc.addAnimation('npc', NPC[5]); 
+
+    this.buy = createSprite(512, 286, 30, 30);
+    this.buy.addAnimation('buy', NPC[0]);
+  }
+
+  draw(){
+    super.draw();
+//draw the door to village
+    drawSprite(this.door);
+    if(playerSprite.overlap(this.door) && keyIsDown(83)){
+      adventureManager.changeState("Evillage");
+      playerSprite.position.x += 80;
+      playerSprite.position.y -= 480;
+  }
+
+//draw the npc
+    drawSprite(this.npc);
+
+//draw the goods
+    drawSprite(this.buy);
+    if(playerSprite.overlap(this.buy)){
+       enterTextVisible = true;
+       currentEnterText = 'Press ENTER to check the price';
+    }else{
+      enterTextVisible = false;
+    }
+    if (playerSprite.overlap(this.buy) && keyIsDown(ENTER)) {
+      dialogueVisible = true;
+      currentDialogue = 'Tomato $800   Sorry, you dont have enough money to pay for it';
+    }else if(mouseIsPressed){
+      dialogueVisible = false;
     }
 }
 }
@@ -985,7 +1004,7 @@ drawSprite(this.mine);
     if(playerSprite.overlap(this.mine) && keyIsDown(83)){
       dialogueVisible = true;
       currentDialogue = 'Mines, no idlers are allowed to enter. Are you sure you want to enter?. Press ENTER to enter';
-  }else if(mouseIsPressed){
+  }else if(keyIsDown(ENTER)){
      dialogueVisible = false;
   }
   if(playerSprite.overlap(this.mine) && keyIsDown(ENTER)){
@@ -1026,59 +1045,59 @@ class Emine extends PNGRoom{
     counter += 1;} 
     else if(counter == 1){
       frameRate(8);
-  currentDialogue = 'John? ! !';
+  currentDialogue = 'David: John? ! !';
     }
 else if(counter == 2){
   frameRate(8);
-      currentDialogue = 'John! Its really you! You are still alive!';      
+      currentDialogue = 'David: John! Its really you! You are still alive!';      
 }else if(counter == 3){
   frameRate(8);
-  currentDialogue = 'Why are you in the East? Are you here alone?';
+  currentDialogue = 'John: Why are you in the East? Are you here alone?';
 }
 else if(counter == 4){
   frameRate(8);
-  currentDialogue = 'Yes, the lord of the West asked me to come here';
+  currentDialogue = 'David: I chose to leave the west and come here by myself. I think maybe I can find a new job here.';
 }
 else if(counter == 5){
   frameRate(8);
-   currentDialogue = 'Its been three years, why dont you go back?';
+   currentDialogue = 'David: It has been three years since you left from the west. Why have you not contacted us for the past three years?';
 }
 else if(counter == 6){
   frameRate(8);
-   currentDialogue = 'I...I cant go back. There is no time to say more, you must leave the East quickly.';
+   currentDialogue = 'John: I...I cant leave here. I signed a work contract. I have to work here for ten years before I can leave.';
 }
 else if(counter == 7){
   frameRate(8);
-   currentDialogue = 'What happened?';
+   currentDialogue = 'David: Ten years! ? What kind of job requires you to sign such a demanding contract?';
 }
 else if(counter == 8){
   frameRate(8);
-   currentDialogue = 'Oh, young adventurer, so you are here. We have been looking for you for a long time.';
+   currentDialogue = 'Lord of East: Oh, my brave adventurer, I have been looking for you for a long time, so you are here!';
    drawSprite(this.lord);
 }
 else if(counter == 9){
   frameRate(8);
-   currentDialogue = 'Where do you want to go? You havent made a decision yet...';
+   currentDialogue = 'Lord of East: Have you decided yet?';
 }
 else if(counter == 10){
   frameRate(8);
-   currentDialogue = 'Thank you for your kindness, but I think maybe I should go back to the west..';
+   currentDialogue = 'Lord of East: Did you decide to stay here and let me arrange a job for you, or go back?';
 }
 else if(counter == 11){
-  frameRate(8);
-   currentDialogue = 'This is really sad news, and I regret the choice you made...';
-}
-else if(counter == 12){
-  frameRate(8);
-   currentDialogue = 'Catch him, dont let him run';
-   drawSprite(this.soldier);
-}
-else if(counter = 13){
   frameRate(80);
-  dialogueVisible = false;
+   currentDialogue = 'Press T to stay in east/ F to back to west';
+}
+
+if(keyIsDown(84)){
+  currentDialogue = 'Lord of East: Smart choice!';
+}
+if(keyIsDown(70)){
+  currentDialogue = 'Lord of East: Another chance for you to make the decision. We will be waiting you to make the right decision.';
    }
+
   }
 }
+
 
 class OC extends PNGRoom {
   preload() {
@@ -1133,36 +1152,40 @@ drawSprite(this.lord);
     counter += 1;} 
     else if(counter == 1){
       frameRate(8);
-  currentDialogue = 'Are you the young man from the west?';
+  currentDialogue = 'Lord of East: Young adventurer! I cant believe that you can go through the difficult maze!';
     }
 else if(counter == 2){
   frameRate(8);
-      currentDialogue = 'Yes, I am entrusted by the lord of the west to come here to seek help';      
+      currentDialogue = 'David: Thank you for your affirmation, Lord.';      
 }else if(counter == 3){
   frameRate(8);
-  currentDialogue = '(Tells the details)';
+  currentDialogue = 'Lord of East: You can come to our city so smoothly, all this is the arrangement of fate.';
 }
 else if(counter == 4){
   frameRate(8);
-  currentDialogue = 'I know the details, but forgive us for rejection. It will not bring us any profit to provide you with help. This is really not a smart deal.';
+  currentDialogue = 'Lord of East: I know what you want, I can arrange work for you, and you will be paid $1000 every week.';
 }
 else if(counter == 5){
   frameRate(8);
-   currentDialogue = 'But the people in our eastern cities are always hospitable. Although we cant help people in the entire western city, we welcome you, a brave adventurer becomes one of us.';
+   currentDialogue = 'David: !?! $1000, is this true? In this way, you can get about $4000 in one month, which is really a lot of money...';
 }
 else if(counter == 6){
   frameRate(8);
-   currentDialogue = '!!??';
+   currentDialogue = 'Lord of East: Be confident young people, you deserve it.';
 }
 else if(counter == 7){
   frameRate(8);
-   currentDialogue = 'You are a smart boy, I believe you can make a wise choice. If you can’t make a decision for the time being, just walk around. We can wait for you.';
+   currentDialogue = 'Lord of East: If there are no problems, lets sign the contract.';
 }
 else if(counter == 8){
   frameRate(8);
-   currentDialogue = 'But dont forget to give me an answer when you come back';
+   currentDialogue = 'David: Sorry, please wait a moment, I want to think about it again. This is really a surprise, I havent gotten over for a while.';
 }
 else if(counter == 9){
+  frameRate(8);
+   currentDialogue = 'Lord of East: In that case, you can think about it again and come here to find me after you decide.';
+}
+else if(counter == 10){
   frameRate(80);
    dialogueVisible = false;
 }
